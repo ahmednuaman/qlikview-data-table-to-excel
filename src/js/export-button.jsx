@@ -53,7 +53,6 @@ const stringToArrayBuffer = (s) => {
 }
 
 export default ({ data }) => {
-  console.log(data)
   const startExport = (event) => {
     const name = 'Sheet 1'
     const wb = new Workbook()
