@@ -13,7 +13,7 @@ export default (data, element) => {
   render(
     <div>
       <QlikTable headers={headers} rows={rows} />
-      <ExportButton headers={headers} rows={rows} />
+      <ExportButton data={headers.concat(rows)} />
     </div>,
     element
   )
