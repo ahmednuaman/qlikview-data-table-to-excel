@@ -1,13 +1,14 @@
+import FileSaver from 'file-saver'
 import React from 'react'
 import Workbook from './workbook'
-import xlsx from 'xlsx'
+import XLSX from 'xlsx'
 
 const sheetFromData = (data, opts) => {
   const range = { s: { c: 10000000, r: 10000000 }, e: { c: 0, r: 0 } }
   let ws = {}
 
-  for (var R = 0; R !== data.length; ++R) {
-    for (var C = 0; C !== data[R].length; ++C) {
+  for (let R = 0; R !== data.length; ++R) {
+    for (let C = 0; C !== data[R].length; ++C) {
       if (range.s.r > R) range.s.r = R
       if (range.s.c > C) range.s.c = C
       if (range.e.r < R) range.e.r = R
@@ -19,7 +20,7 @@ const sheetFromData = (data, opts) => {
         continue
       }
 
-      const cellRef = xlsx.utils.encode_cell({ c: C, r: R })
+      const cellRef = XLSX.utils.encode_cell({ c: C, r: R })
 
       if (typeof cell.v === 'number') {
         cell.t = 'n'
@@ -34,16 +35,45 @@ const sheetFromData = (data, opts) => {
   }
 
   if (range.s.c < 10000000) {
-    ws['!ref'] = xlsx.utils.encode_range(range)
+    ws['!ref'] = XLSX.utils.encode_range(range)
   }
 
   return ws
 }
 
+const stringToArrayBuffer = (s) => {
+  const buf = new ArrayBuffer(s.length)
+  const view = new Uint8Array(buf)
+
+  for (let i = 0; i !== s.length; ++i) {
+    view[i] = s.charCodeAt(i) & 0xFF
+  }
+
+  return buf
+}
+
 export default ({ data }) => {
+  console.log(data)
   const startExport = (event) => {
+    const name = 'Sheet 1'
     const wb = new Workbook()
     const ws = sheetFromData(data)
+
+    wb.SheetNames.push(name)
+    wb.Sheets[name] = ws
+
+    const fileData = XLSX.write(wb, {
+      bookType: 'xlsx',
+      bookSST: true,
+      type: 'binary'
+    })
+
+    FileSaver.saveAs(
+      new window.Blob([stringToArrayBuffer(fileData)], {
+        type: 'application/octet-stream'
+      }),
+      'file.xlsx'
+    )
   }
 
   return (
