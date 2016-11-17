@@ -48,6 +48,12 @@ let config = {
       loader: WebpackExtractTextPlugin.extract('style', 'css!sass')
     }]
   },
+  node: {
+    fs: 'empty'
+  },
+  noParse: [
+    /xlsx/
+  ],
   resolve: {
     extensions: ['', '.js', '.jsx', '.json', '.jpg', '.jpeg', '.gif', '.png', '.svg'],
     alias: {
@@ -62,6 +68,7 @@ let config = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
     new WebpackProgressBarPlugin(),
+    new webpack.IgnorePlugin(/cptable/),
     new WebpackExtractTextPlugin('[name]', {
       allChunks: true
     }),
