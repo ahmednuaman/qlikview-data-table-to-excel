@@ -1,6 +1,6 @@
 import { render } from 'react-dom'
 
-import _ from 'lodash'
+import ExportButton from './export-button'
 import QlikTable from './qlik-table'
 import React from 'react'
 
@@ -10,5 +10,11 @@ export default (data, element) => {
   const headers = data.HeaderRows[0].map(extract)
   const rows = data.Rows.map((row) => row.map(extract))
 
-  render(<QlikTable headers={headers} rows={rows} />, element)
+  render(
+    <div>
+      <QlikTable headers={headers} rows={rows} />
+      <ExportButton headers={headers} rows={rows} />
+    </div>,
+    element
+  )
 }

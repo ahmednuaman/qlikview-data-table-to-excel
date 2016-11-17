@@ -3,7 +3,10 @@ import { Cell, Column, Table } from 'fixed-data-table'
 import React from 'react'
 
 class QlikTable extends React.Component {
+  maxRows = 10
   state = {
+    rowHeight: 50,
+    tableHeight: 50,
     tableWidth: 1000
   }
   timeout = 16
@@ -14,7 +17,10 @@ class QlikTable extends React.Component {
   }
 
   update () {
+    const rows = this.props.rows.length > this.maxRows ? this.maxRows : this.props.rows.length
+
     this.setState({
+      tableHeight: rows * this.state.rowHeight,
       tableWidth: window.innerWidth
     })
   }
@@ -27,11 +33,11 @@ class QlikTable extends React.Component {
   render () {
     return (
       <Table
-        rowHeight={50}
+        rowHeight={this.state.rowHeight}
         rowsCount={this.props.rows.length}
         width={this.state.tableWidth}
-        height={500}
-        headerHeight={50}>
+        height={this.state.tableHeight}
+        headerHeight={this.state.rowHeight}>
         {
           this.props.headers.map((col, colIndex) =>
             <Column
@@ -42,8 +48,8 @@ class QlikTable extends React.Component {
                   {this.props.rows[rowIndex][colIndex]}
                 </Cell>
               )}
-              width={100}
               flexGrow={1}
+              width={100}
             />
           )
         }
