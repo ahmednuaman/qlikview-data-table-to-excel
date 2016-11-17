@@ -6,7 +6,55 @@
   const QvaModule = {
     Element,
     Data: {
-      Rows: []
+      HeaderRows: [
+        [{
+          text: 'foo'
+        }, {
+          text: 'bar'
+        }, {
+          text: 'foobar'
+        }, {
+          text: 'barfoo'
+        }]
+      ],
+      Rows: [
+        [{
+          text: 'foo'
+        }, {
+          text: 'bar'
+        }, {
+          text: 'foobar'
+        }, {
+          text: 'barfoo'
+        }],
+        [{
+          text: 'foo'
+        }, {
+          text: 'bar'
+        }, {
+          text: 'foobar'
+        }, {
+          text: 'barfoo'
+        }],
+        [{
+          text: 'foo'
+        }, {
+          text: 'bar'
+        }, {
+          text: 'foobar'
+        }, {
+          text: 'barfoo'
+        }],
+        [{
+          text: 'foo'
+        }, {
+          text: 'bar'
+        }, {
+          text: 'foobar'
+        }, {
+          text: 'barfoo'
+        }]
+      ]
     }
   }
 
@@ -23,7 +71,6 @@
       const el = window.document.createElement('link')
 
       el.rel = 'stylesheet'
-      el.type = 'text/css'
       el.href = url
 
       head.appendChild(el)

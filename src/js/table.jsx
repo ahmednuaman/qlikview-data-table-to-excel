@@ -1,40 +1,64 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
 import { Cell, Column, Table } from 'fixed-data-table'
+import { render } from 'react-dom'
 
-const rows = [
-  ['a1', 'b1', 'c1'],
-  ['a2', 'b2', 'c2'],
-  ['a3', 'b3', 'c3']
-]
+import _ from 'lodash'
+import React from 'react'
 
-export default (element) =>
-  ReactDOM.render(
-    <Table
-      rowHeight={50}
-      rowsCount={rows.length}
-      width={5000}
-      height={5000}
-      headerHeight={50}>
-      <Column
-        header={<Cell>Col 1</Cell>}
-        cell={<Cell>Column 1 static content</Cell>}
-        width={2000}
-      />
-      <Column
-        header={<Cell>Col 2</Cell>}
-        cell={<Cell>Column 2 static content</Cell>}
-        width={1000}
-      />
-      <Column
-        header={<Cell>Col 3</Cell>}
-        cell={({rowIndex, ...props}) => (
-          <Cell {...props}>
-            Data for column 3: {rows[rowIndex][2]}
-          </Cell>
-        )}
-        width={2000}
-      />
-    </Table>,
-    element
-  )
+class QlikTable extends React.Component {
+  state = {
+    tableWidth: 1000
+  }
+  timeout = 16
+
+  resize () {
+    window.clearTimeout(this.updateTimeout)
+    this.updateTimeout = window.setTimeout(this.update.bind(this), this.timeout)
+  }
+
+  update () {
+    this.setState({
+      tableWidth: window.innerWidth
+    })
+  }
+
+  componentDidMount () {
+    this.update()
+    window.addEventListener('resize', this.resize.bind(this), false)
+  }
+
+  render () {
+    return (
+      <Table
+        rowHeight={50}
+        rowsCount={this.props.rows.length}
+        width={this.state.tableWidth}
+        height={500}
+        headerHeight={50}>
+        {
+          this.props.headers.map((col, colIndex) =>
+            <Column
+              key={colIndex}
+              header={<Cell>{col}</Cell>}
+              cell={({ rowIndex }) => (
+                <Cell>
+                  {this.props.rows[rowIndex][colIndex]}
+                </Cell>
+              )}
+              width={100}
+              flexGrow={1}
+            />
+          )
+        }
+      </Table>
+    )
+  }
+}
+
+const extract = (col) => col.text
+
+export default (data, element) => {
+  const headers = data.HeaderRows[0].map(extract)
+  const rows = data.Rows.map((row) => row.map(extract))
+
+  render(<QlikTable headers={headers} rows={rows} />, element)
+}

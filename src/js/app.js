@@ -9,6 +9,6 @@ $(() => {
   Qva.LoadCSS(`${URL_PREFIX}asset/css/app.css`)
 
   Qv.AddExtension(EXT_NAME, function () {
-    table(this.Element)
+    table(this.Data, this.Element)
   })
 })
