@@ -23,6 +23,7 @@
       const el = window.document.createElement('link')
 
       el.rel = 'stylesheet'
+      el.type = 'text/css'
       el.href = url
 
       head.appendChild(el)

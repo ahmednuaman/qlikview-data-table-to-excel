@@ -19,7 +19,7 @@ let config = {
   cache: true,
   entry: {
     'script.js': './js/app.js',
-    'asset/css/app.css': './scss/app.scss'
+    'asset/css/app.css': ['fixed-data-table/dist/fixed-data-table.css', './scss/app.scss']
   },
   output: {
     filename: '[name]',
@@ -44,7 +44,7 @@ let config = {
       ],
       loader: 'babel?compact=false'
     }, {
-      test: /\.scss$/,
+      test: /\.s?css$/,
       loader: WebpackExtractTextPlugin.extract('style', 'css!sass')
     }]
   },
