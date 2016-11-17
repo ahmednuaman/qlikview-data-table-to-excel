@@ -1,2 +1,2 @@
-# qlikview-data-table-to-excel
-A simple Qlikview extension to take data and export it to Excel
+# qlikview-extension
+A simple boilerplate for writing Qlikview extensions in Javascript
