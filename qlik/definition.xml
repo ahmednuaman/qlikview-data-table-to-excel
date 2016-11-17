@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?> 
-<ExtensionObject Label="Ext" type="object">
+<ExtensionObject Label="Data table to Excel" Type="Object" Path="DataTableToExcel" PageWidth="4" PageHeight="2000">
   <Dimension Label="Dimension 1" Initial="" TargetName="Dimension 1" />
   <Dimension Label="Dimension 2" Initial="" TargetName="Dimension 2" />
   <Measurement Label="Measure 1" Initial="" TargetName="Measure 1" />
   <Measurement Label="Measure 2" Initial="" TargetName="Measure 2" />
-  <Initiate Name="Caption.Text" value="Ext" />
+  <Initiate Name="Caption.Text" value="Data table to Excel" />
 </ExtensionObject>
