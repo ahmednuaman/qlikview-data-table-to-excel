@@ -17,7 +17,7 @@ class QlikTable extends React.Component {
   }
 
   update () {
-    const rows = this.props.rows.length > this.maxRows ? this.maxRows : this.props.rows.length
+    const rows = this.props.rows.length > this.maxRows ? this.maxRows : this.props.rows.length + 1
 
     this.setState({
       tableHeight: rows * this.state.rowHeight,
